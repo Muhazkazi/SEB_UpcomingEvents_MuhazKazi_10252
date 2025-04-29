@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Events - Campus Events Hub</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      /* Reset and Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      :root {
+        --primary: #4361ee;
+        --primary-light: #4895ef;
+        --secondary: #3f37c9;
+        --accent: #f72585;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --success: #4cc9f0;
+        --warning: #f9c74f;
+        --danger: #f94144;
+        --gray: #adb5bd;
+        --light-gray: #e9ecef;
+        --transition: all 0.3s ease;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      /* Header & Navigation */
+      header {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo span {
+        color: var(--accent);
+      }
+
+      .logo i {
+        margin-right: 10px;
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+      }
+
+      .nav-links li {
+        position: relative;
+      }
+
+      .nav-links a {
+        font-weight: 500;
+        padding: 8px 5px;
+        font-size: 1.1rem;
+        transition: var(--transition);
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: white;
+        transition: var(--transition);
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 24px;
+        cursor: pointer;
+      }
+
+      .menu-toggle span {
+        width: 30px;
+        height: 3px;
+        background-color: white;
+        transition: var(--transition);
+      }
+
+      /* Page Banner */
+      .page-banner {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url("/api/placeholder/1200/300") center/cover;
+        padding: 5rem 2rem;
+        text-align: center;
+        color: white;
+      }
+
+      .page-banner h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .breadcrumb {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .breadcrumb a {
+        color: var(--light-gray);
+        transition: var(--transition);
+      }
+
+      .breadcrumb a:hover {
+        color: var(--accent);
+      }
+
+      .breadcrumb span {
+        color: var(--accent);
+      }
+
+      /* Events Page Styles */
+      .events-page {
+        padding: 5rem 1rem;
+      }
+
+      .filter-container {
+        max-width: 1200px;
+        margin: 0 auto 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 1.5rem;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .search-box {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        border-radius: 50px;
+        padding: 0 1rem;
+        overflow: hidden;
+      }
+
+      .search-box input {
+        background: none;
+        border: none;
+        padding: 12px;
+        font-size: 1rem;
+        flex-grow: 1;
+        outline: none;
+      }
+
+      .search-box button {
+        background: none;
+        border: none;
+        color: var(--primary);
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
+
+      .filter-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        padding: 8px 15px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        border: none;
+        background-color: var(--light-gray);
+        color: var(--dark);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .filter-btn.active {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .events-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+
+      .event-card {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+      }
+
+      .event-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .event-img {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .event-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .event-card:hover .event-img img {
+        transform: scale(1.1);
+      }
+
+      .event-date {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: var(--accent);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .event-category {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: var(--primary);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .event-category i {
+        margin-right: 5px;
+      }
+
+      .event-content {
+        padding: 1.5rem;
+      }
+
+      .event-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        color: var(--dark);
+      }
+
+      .event-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        color: var(--gray);
+        font-size: 0.9rem;
+      }
+
+      .event-location {
+        display: flex;
+        align-items: center;
+      }
+
+      .event-location i {
+        margin-right: 5px;
+        color: var(--primary);
+      }
+
+      .event-seats {
+        display: flex;
+        align-items: center;
+      }
+
+      .event-seats i {
+        margin-right: 5px;
+        color: var(--primary);
+      }
+
+      .seats-progress {
+        height: 8px;
+        background-color: var(--light-gray);
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        overflow: hidden;
+      }
+
+      .seats-progress-bar {
+        height: 100%;
+        border-radius: 4px;
+        background: linear-gradient(90deg, var(--success), var(--primary));
+      }
+
+      .event-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+      }
+
+      .btn-sm {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+      }
+
+      .btn-primary {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-light);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+      }
+
+      .btn-outline:hover {
+        background-color: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 3rem;
+      }
+
+      .pagination button {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        border: none;
+        background-color: white;
+        color: var(--dark);
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .pagination button.active,
+      .pagination button:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      /* Footer */
+      footer {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 3rem 1rem;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+      }
+
+      .footer-col h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .footer-col h3::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--accent);
+      }
+
+      .footer-col p {
+        margin-bottom: 1rem;
+      }
+
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        transition: var(--transition);
+      }
+
+      .footer-links a:hover {
+        color: var(--accent);
+        padding-left: 5px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 1rem;
+      }
+
+      .social-links a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transition: var(--transition);
+      }
+
+      .social-links a:hover {
+        background-color: var(--accent);
+        transform: translateY(-5px);
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Media Queries */
+      @media screen and (max-width: 992px) {
+        .events-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: var(--primary);
+          padding: 2rem;
+          gap: 20px;
+          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+      }
+
+      @media screen and (max-width: 576px) {
+        .events-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-container {
+          grid-template-columns: 1fr;
+        }
+
+        .filter-container {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .filter-buttons {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header & Navigation -->
+    <header>
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <i class="fas fa-calendar-alt"></i>
+          Campus<span>Events</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="submit_event.html">Submit Event</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+      <h1>All Events</h1>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Events</span>
+      </div>
+    </section>
+
+    <!-- Events Listing Section -->
+    <section class="events-page">
+      <div class="filter-container">
+        <div class="search-box">
+          <input type="text" placeholder="Search events..." />
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="filter-buttons">
+          <button class="filter-btn active">All</button>
+          <button class="filter-btn">Workshops</button>
+          <button class="filter-btn">Seminars</button>
+          <button class="filter-btn">Cultural</button>
+          <button class="filter-btn">Sports</button>
+          <button class="filter-btn">Tech</button>
+        </div>
+      </div>
+
+      <div class="events-grid">
+        <!-- Event Card 1 -->
+        <div class="event-card">
+          <div class="event-img">
+            <img src="/web-development.jpg" alt="Tech Workshop" />
+            <div class="event-date">Apr 20</div>
+            <div class="event-category">
+              <i class="fas fa-laptop-code"></i> Workshop
+            </div>
+          </div>
+          <div class="event-content">
+            <h3 class="event-title">Web Development Masterclass</h3>
+            <div class="event-info">
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> Tech Building, Room 305
+              </div>
+              <div class="event-seats"><i class="fas fa-users"></i> 45/50</div>
+            </div>
+            <div class="seats-progress">
+              <div class="seats-progress-bar" style="width: 90%"></div>
+            </div>
+            <div class="event-actions">
+              <a href="web-event-detail.html" class="btn btn-sm btn-primary"
+                >View Details</a
+              >
+              <a href="registration.html" class="btn btn-sm btn-outline"
+                >Register</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Card 2 -->
+        <div class="event-card">
+          <div class="event-img">
+            <img src="/enterpr.jpeg" alt="Business Seminar" />
+            <div class="event-date">Apr 22</div>
+            <div class="event-category">
+              <i class="fas fa-briefcase"></i> Seminar
+            </div>
+          </div>
+          <div class="event-content">
+            <h3 class="event-title">Entrepreneurship Summit</h3>
+            <div class="event-info">
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> Business School Auditorium
+              </div>
+              <div class="event-seats">
+                <i class="fas fa-users"></i> 120/200
+              </div>
+            </div>
+            <div class="seats-progress">
+              <div class="seats-progress-bar" style="width: 60%"></div>
+            </div>
+            <div class="event-actions">
+              <a href="event-detail.html" class="btn btn-sm btn-primary"
+                >View Details</a
+              >
+              <a href="registration.html" class="btn btn-sm btn-outline"
+                >Register</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Card 3 -->
+        <div class="event-card">
+          <div class="event-img">
+            <img src="/euph.jpg" alt="Cultural Festival" />
+            <div class="event-date">Apr 25</div>
+            <div class="event-category">
+              <i class="fas fa-music"></i> Cultural
+            </div>
+          </div>
+          <div class="event-content">
+            <h3 class="event-title">Annual Cultural Festival</h3>
+            <div class="event-info">
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> Main Campus Grounds
+              </div>
+              <div class="event-seats">
+                <i class="fas fa-users"></i> 350/500
+              </div>
+            </div>
+            <div class="seats-progress">
+              <div class="seats-progress-bar" style="width: 70%"></div>
+            </div>
+            <div class="event-actions">
+              <a href="euph-event-detail.html" class="btn btn-sm btn-primary"
+                >View Details</a
+              >
+              <a href="registration.html" class="btn btn-sm btn-outline"
+                >Register</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Card 4 -->
+        <div class="event-card">
+          <div class="event-img">
+            <img
+              src="/ASBM-University-to-Host-National-Hackathon-Event-2025-on-1st-March.webp"
+              alt="Hackathon Event"
+            />
+            <div class="event-date">Apr 27</div>
+            <div class="event-category">
+              <i class="fas fa-laptop-code"></i> Technology
+            </div>
+          </div>
+          <div class="event-content">
+            <h3 class="event-title">Hackathon 2025</h3>
+            <div class="event-info">
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> Innovation Hub, Tech
+                Center
+              </div>
+              <div class="event-seats">
+                <i class="fas fa-users"></i> 200/300
+              </div>
+            </div>
+            <div class="seats-progress">
+              <div class="seats-progress-bar" style="width: 66%"></div>
+            </div>
+            <div class="event-actions">
+              <a href="hack-event-detail.html" class="btn btn-sm btn-primary"
+                >View Details</a
+              >
+              <a href="registration.html" class="btn btn-sm btn-outline"
+                >Register</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Card 5 -->
+        <div class="event-card">
+          <div class="event-img">
+            <img src="ai_ml.jpg" alt="Tech Talk" />
+            <div class="event-date">Apr 29</div>
+            <div class="event-category">
+              <i class="fas fa-microchip"></i> Tech
+            </div>
+          </div>
+          <div class="event-content">
+            <h3 class="event-title">AI and Machine Learning Symposium</h3>
+            <div class="event-info">
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> Computer Science Building
+              </div>
+              <div class="event-seats"><i class="fas fa-users"></i> 80/100</div>
+            </div>
+            <div class="seats-progress">
+              <div class="seats-progress-bar" style="width: 80%"></div>
+            </div>
+            <div class="event-actions">
+              <a href="event-detail.html" class="btn btn-sm btn-primary"
+                >View Details</a
+              >
+              <a href="registration.html" class="btn btn-sm btn-outline"
+                >Register</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Card 6 -->
+        <div class="event-card">
+          <div class="event-img">
+            <img src="/robot.jpg" alt="Robotics Competition" />
+            <div class="event-date">May 2</div>
+            <div class="event-category">
+              <i class="fas fa-robot"></i> Competition
+            </div>
+          </div>
+          <div class="event-content">
+            <h3 class="event-title">Robotics Competition</h3>
+            <div class="event-info">
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> Engineering Building, Lab
+                203
+              </div>
+              <div class="event-seats"><i class="fas fa-users"></i> 25/30</div>
+            </div>
+            <div class="seats-progress">
+              <div class="seats-progress-bar" style="width: 83%"></div>
+            </div>
+            <div class="event-actions">
+              <a href="event-detail.html" class="btn btn-sm btn-primary"
+                >View Details</a
+              >
+              <a href="registration.html" class="btn btn-sm btn-outline"
+                >Register</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Card 7 -->
+        <div class="event-card">
+          <div class="event-img">
+            <img src="/prakalp.jpg" alt="Prakalp 3.0 Competition" />
+            <div class="event-date">April 19</div>
+            <div class="event-category">
+              <i class="fas fa-microchip"></i> Project Competition
+            </div>
+          </div>
+          <div class="event-content">
+            <h3 class="event-title">Prakalp 3.0 2K25</h3>
+            <div class="event-info">
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> FR. CRCE
+              </div>
+              <div class="event-seats">
+                <i class="fas fa-users"></i> 400/500
+              </div>
+            </div>
+            <div class="seats-progress">
+              <div class="seats-progress-bar" style="width: 80%"></div>
+            </div>
+            <div class="event-actions">
+              <a href="event-detail.html" class="btn btn-sm btn-primary"
+                >View Details</a
+              >
+              <a href="registration.html" class="btn btn-sm btn-outline"
+                >Register</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Card 8 -->
+        <div class="event-card">
+          <div class="event-img">
+            <img src="/unplug.jpg" alt="UNPLUG Pitch Perfect" />
+            <div class="event-date">March 18</div>
+            <div class="event-category">
+              <i class="fas fa-lightbulb"></i> Startup
+            </div>
+          </div>
+          <div class="event-content">
+            <h3 class="event-title">UNPLUG: Pitch Perfect by GDSC CRCE</h3>
+            <div class="event-info">
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> Room 108
+              </div>
+              <div class="event-seats"><i class="fas fa-users"></i> 60/100</div>
+            </div>
+            <div class="seats-progress">
+              <div class="seats-progress-bar" style="width: 60%"></div>
+            </div>
+            <div class="event-actions">
+              <a href="event-detail.html" class="btn btn-sm btn-primary"
+                >View Details</a
+              >
+              <a href="registration.html" class="btn btn-sm btn-outline"
+                >Register</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Card 9 -->
+        <div class="event-card">
+          <div class="event-img">
+            <img src="/startup.jpg" alt="Startup Weekend" />
+            <div class="event-date">May 10</div>
+            <div class="event-category">
+              <i class="fas fa-rocket"></i> Entrepreneurship
+            </div>
+          </div>
+          <div class="event-content">
+            <h3 class="event-title">Startup Weekend</h3>
+            <div class="event-info">
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> Innovation Center, Main
+                Hall
+              </div>
+              <div class="event-seats">
+                <i class="fas fa-users"></i> 150/200
+              </div>
+            </div>
+            <div class="seats-progress">
+              <div class="seats-progress-bar" style="width: 75%"></div>
+            </div>
+            <div class="event-actions">
+              <a href="event-detail.html" class="btn btn-sm btn-primary"
+                >View Details</a
+              >
+              <a href="registration.html" class="btn btn-sm btn-outline"
+                >Register</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button><i class="fas fa-chevron-left"></i></button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>About Us</h3>
+          <p>
+            Campus Events Hub is your one-stop platform for discovering,
+            organizing, and participating in campus events across all
+            departments and student groups.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="submit_event.html">Submit Event</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Categories</h3>
+          <ul class="footer-links">
+            <li><a href="#">Workshops</a></li>
+            <li><a href="#">Seminars</a></li>
+            <li><a href="#">Cultural Events</a></li>
+            <li><a href="#">Sports Competitions</a></li>
+            <li><a href="#">Tech Talks</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <ul class="footer-links">
+            <li>
+              <i class="fas fa-map-marker-alt"></i> 123 University Ave, Campus,
+              CA 12345
+            </li>
+            <li><i class="fas fa-phone"></i> (123) 456-</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <script src="events.js"></script>
+  </body>
+</html>

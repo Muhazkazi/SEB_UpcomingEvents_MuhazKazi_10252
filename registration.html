@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a00e0;
+            --primary-light: #8e2de2;
+            --primary-dark: #3600a7;
+            --accent: #ff6b6b;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --light: #f9f9f9;
+            --success: #00b894;
+            --card-bg: white;
+            --input-bg: #f1f2f6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .event-details {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .event-details:hover {
+            transform: translateY(-5px);
+        }
+        
+        .event-thumb {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+            margin-right: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .event-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .event-info h2 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .event-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 0.75rem 0;
+        }
+        
+        .event-tag {
+            background-color: rgba(74, 0, 224, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .event-tag i {
+            margin-right: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .seats-info {
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .seats-info span {
+            color: var(--accent);
+        }
+        
+        .form-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+            font-size: 1.25rem;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: var(--input-bg);
+            color: var(--text);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(142, 45, 226, 0.15);
+            outline: none;
+            background-color: white;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .required:after {
+            content: "*";
+            color: var(--accent);
+            margin-left: 4px;
+        }
+        
+        .hint {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 5px;
+            transition: all 0.2s;
+        }
+        
+        .error {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .error i {
+            margin-right: 5px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        input:invalid:focus ~ .error,
+        select:invalid:focus ~ .error,
+        textarea:invalid:focus ~ .error {
+            display: flex;
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 0, 224, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 0, 224, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(100, 100);
+                opacity: 0;
+            }
+        }
+        
+        button:active::after {
+            animation: ripple 600ms linear;
+        }
+        
+        .cancel-btn {
+            background: linear-gradient(to right, #dfe6e9, #b2bec3);
+            color: var(--text);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-right: 15px;
+        }
+        
+        .cancel-btn:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+        
+        /* Team member section styling */
+        .team-member {
+            background-color: rgba(241, 242, 246, 0.5);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .remove-member {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--accent);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: none;
+            padding: 0;
+        }
+        
+        .remove-member:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        
+        .add-member-btn {
+            background: rgba(74, 0, 224, 0.1);
+            color: var(--primary);
+            border: 2px dashed var(--primary-light);
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: none;
+        }
+        
+        .add-member-btn:hover {
+            background: rgba(74, 0, 224, 0.15);
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        
+        .add-member-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background-color: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        
+        .success-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--success), #22d3a0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3);
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 184, 148, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 184, 148, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 184, 148, 0);
+            }
+        }
+        
+        .success-icon i {
+            color: white;
+            font-size: 45px;
+        }
+        
+        .modal-title {
+            color: var(--text);
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-text {
+            color: var(--text-light);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .modal-btn {
+            background: linear-gradient(135deg, var(--success), #22d3a0);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+            min-width: 150px;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.4);
+        }
+        
+        .event-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        
+        .event-meta span {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .event-meta span i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 2rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+            color: var(--text-light);
+        }
+        
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .toggle-label {
+            margin-right: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .checkbox-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        
+        .checkbox-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .switch-slider {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .switch-slider:before {
+            transform: translateX(24px);
+        }
+        
+        .register-notes {
+            background-color: rgba(74, 0, 224, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+        
+        .register-notes p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+        
+        .register-notes strong {
+            color: var(--primary-dark);
+        }
+        
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-in {
+            animation: slideInFromRight 0.5s ease forwards;
+        }
+        
+        .event-banner {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .event-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background-color: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .tab:hover:not(.active) {
+            color: var(--primary-dark);
+            border-bottom-color: rgba(74, 0, 224, 0.3);
+        }
+        
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            margin: 10px 0;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: rgba(241, 242, 246, 0.5);
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary-light);
+            background-color: rgba(74, 0, 224, 0.05);
+        }
+        
+        .file-upload input[type="file"] {
+            position: absolute;
+            font-size: 100px;
+            opacity: 0;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+        
+        .file-upload-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .file-name {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="page-title">Event Registration</h1>
+            <p class="page-subtitle">Complete the form below to secure your spot at this amazing event!</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Dynamic event information will be loaded here -->
+        <div id="event-info-container"></div>
+        
+        <div class="form-container">
+            <div class="register-notes fade-in">
+                <p><strong>Note:</strong> Registration will close when all spots are filled or <span id="deadline-text">48 hours before the event starts</span>. Please make sure to provide accurate information.</p>
+            </div>
+            
+            <form id="registrationForm">
+                <div class="form-section fade-in">
+                    <h3 class="section-title"><i class="fas fa-user"></i> Personal Information</h3>
+                    
+                    <div class="row">
+                        <div class="col form-group">
+                            <label class="required" for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                            <div class="error"><i class="fas fa-exclamation-circle"></i> Please enter your first name</div>
+                        </div>
+                        
+                        <div class="col form-group">
+                            <label class="required" for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                            <div class="error"><i class="fas fa-exclamation-circle"></i> Please enter your last name</div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col form-group">
+                            <label class="required" for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error"><i class="fas fa-exclamation-circle"></i> Please enter a valid email address</div>
+                            <p class="hint"><i class="fas fa-info-circle"></i> We'll send your registration confirmation to this email</p>
+                        </div>
+                        
+                        <div class="col form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                            <p class="hint"><i class="fas fa-info-circle"></i> Optional, but useful for last-minute updates</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required" for="studentId">Student ID</label>
+                        <input type="text" id="studentId" name="studentId" required>
+                        <div class="error"><i class="fas fa-exclamation-circle"></i> Please enter your student ID</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required" for="department">Department/Major</label>
+                        <select id="department" name="department" required>
+                            <option value="">-- Select your department --</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="engineering">Engineering</option>
+                            <option value="business">Business Administration</option>
+                            <option value="arts">Arts & Design</option>
+                            <option value="humanities">Humanities</option>
+                            <option value="science">Natural Sciences</option>
+                            <option value="social-science">Social Sciences</option>
+                            <option value="medicine">Medicine & Health Sciences</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="error"><i class="fas fa-exclamation-circle"></i> Please select your department</div>
+                    </div>
+                </div>
+                
+                <!-- Dynamic form sections will be added here based on the event -->
+                <div id="dynamic-form-sections"></div>
+                
+                <div class="form-section fade-in">
+                    <h3 class="section-title"><i class="fas fa-clipboard-check"></i> Additional Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="dietaryRestrictions">Dietary Restrictions</label>
+                        <input type="text" id="dietaryRestrictions" name="dietaryRestrictions" placeholder="Any dietary restrictions or food allergies?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="specialRequirements">Special Requirements or Accommodations</label>
+                        <textarea id="specialRequirements" name="specialRequirements" placeholder="Let us know if you have any special requirements..."></textarea>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <span class="toggle-label">Subscribe to event updates:</span>
+                        <label class="checkbox-switch">
+                            <input type="checkbox" checked>
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <span class="toggle-label">I agree to</span>
+                        <label class="checkbox-switch">
+                            <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                            <span class="switch-slider"></span>
+                        </label>
+                        <span class="toggle-label" style="margin-left: 10px;">the <a href="#" style="color: var(--primary); text-decoration: underline;">terms and conditions</a></span>
+                    </div>
+                    <div class="error" style="margin-top: 5px; margin-left: 160px;"><i class="fas fa-exclamation-circle"></i> You must agree to the terms and conditions</div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="submit">Register Now</button>
+                    </div>
+                    </form>
+                    </div>
+                    
+                    <!-- Success Modal -->
+                    <div class="modal-overlay" id="successModal">
+                        <div class="modal">
+                            <div class="success-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <h3 class="modal-title">Registration Successful!</h3>
+                            <p class="modal-text">
+                                Thank you for registering for the event. We've sent a confirmation email to your inbox with all the details.
+                            </p>
+                            <button class="modal-btn" onclick="closeModal()">Done</button>
+                        </div>
+                    </div>
+                    
+                    <footer>
+                        <p>&copy; 2025 Event Registration Portal. All rights reserved.</p>
+                    </footer>
+                    
+                    <script>
+                        // Function to close the success modal
+                        function closeModal() {
+                            document.getElementById('successModal').classList.remove('active');
+                        }
+                        
+                        // Form submission handler
+                        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            
+                            // Basic form validation
+                            const requiredFields = document.querySelectorAll('[required]');
+                            let isValid = true;
+                            
+                            requiredFields.forEach(field => {
+                                if (!field.value) {
+                                    isValid = false;
+                                    field.parentElement.querySelector('.error').style.display = 'flex';
+                                } else {
+                                    if (field.parentElement.querySelector('.error')) {
+                                        field.parentElement.querySelector('.error').style.display = 'none';
+                                    }
+                                }
+                            });
+                            
+                            if (isValid) {
+                                // Show success modal
+                                document.getElementById('successModal').classList.add('active');
+                                
+                                // Reset form
+                                this.reset();
+                            }
+                        });
+                        
+                        // Load event information (in a real application, this would be dynamic)
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const eventInfoContainer = document.getElementById('event-info-container');
+                            eventInfoContainer.innerHTML = `
+                                <div class="event-details fade-in">
+                                    <div class="event-thumb">
+                                        <img src="/ai_ml.jpg" alt="Event Image">
+                                    </div>
+                                    <div class="event-info">
+                                        <h2> Web development masterclass </h2>
+                                        <div class="event-meta">
+                                            <span><i class="far fa-calendar-alt"></i> May 15, 2025</span>
+                                            <span><i class="far fa-clock"></i> 9:00 AM - 6:00 PM</span>
+                                            <span><i class="fas fa-map-marker-alt"></i> Tech building, Room 301</span>
+                                        </div>
+                                        <div class="event-tags">
+                                            <span class="event-tag"><i class="fas fa-laptop-code"></i> Coding</span>
+                                            <span class="event-tag"><i class="fas fa-users"></i> Teamwork</span>
+                                            <span class="event-tag"><i class="fas fa-trophy"></i> Prizes</span>
+                                        </div>
+                                        <p class="seats-info">Available spots: <span>85 / 100</span></p>
+                                    </div>
+                                </div>
+                            `;
+                    
+                            // Add hackathon-specific form sections
+                            const dynamicFormSections = document.getElementById('dynamic-form-sections');
+                            dynamicFormSections.innerHTML = `
+                                <div class="form-section fade-in">
+                                    <h3 class="section-title"><i class="fas fa-users"></i> Team Information</h3>
+                                    <div class="form-group">
+                                        <label class="required" for="teamName">Team Name</label>
+                                        <input type="text" id="teamName" name="teamName" required>
+                                        <div class="error"><i class="fas fa-exclamation-circle"></i> Please enter your team name</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="projectIdea">Project Idea (optional)</label>
+                                        <textarea id="projectIdea" name="projectIdea" placeholder="Brief description of your project idea if you have one..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="skillLevel">Skill Level</label>
+                                        <select id="skillLevel" name="skillLevel">
+                                            <option value="beginner">Beginner</option>
+                                            <option value="intermediate">Intermediate</option>
+                                            <option value="advanced">Advanced</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    </script>
+                    </body>
+                    </html>

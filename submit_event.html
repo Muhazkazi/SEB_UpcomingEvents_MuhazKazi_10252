@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Event</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3a0ca3;
+            --primary-light: #4361ee;
+            --primary-dark: #240046;
+            --accent: #f72585;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --light: #f8f9fa;
+            --success: #06d6a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #e4eafd 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.05) 20px
+            );
+            animation: backgroundShift 20s linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes backgroundShift {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(20%, 20%);
+            }
+        }
+        
+        header .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+        }
+        
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary-light);
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+        
+        input:focus + label, textarea:focus + label, select:focus + label {
+            color: var(--primary);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+            outline: none;
+            background-color: white;
+        }
+        
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+        
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .required:after {
+            content: "*";
+            color: var(--accent);
+            margin-left: 4px;
+        }
+        
+        .hint {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 5px;
+            transition: all 0.2s;
+        }
+        
+        input:focus ~ .hint, textarea:focus ~ .hint, select:focus ~ .hint {
+            color: var(--primary-light);
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(100, 100);
+                opacity: 0;
+            }
+        }
+        
+        button:active::after {
+            animation: ripple 600ms linear;
+        }
+        
+        .cancel-btn {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-right: 15px;
+        }
+        
+        .cancel-btn:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+        
+        .notification {
+            padding: 20px;
+            background-color: rgba(230, 244, 255, 0.8);
+            border-left: 4px solid var(--primary-light);
+            margin-bottom: 30px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .notification i {
+            font-size: 24px;
+            color: var(--primary-light);
+            margin-right: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 2rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+            color: var(--text-light);
+        }
+        
+        .error {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .error i {
+            margin-right: 5px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        input:invalid:focus ~ .error,
+        select:invalid:focus ~ .error,
+        textarea:invalid:focus ~ .error {
+            display: flex;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background-color: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .success-icon i {
+            color: white;
+            font-size: 40px;
+        }
+        
+        .modal-title {
+            color: var(--text);
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-text {
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+        
+        .modal-btn {
+            background: linear-gradient(135deg, var(--success) 0%, #09bc8a 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(6, 214, 160, 0.3);
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(6, 214, 160, 0.4);
+        }
+        
+        /* Animation for Field Focus */
+        .input-group {
+            position: relative;
+        }
+        
+        .floating-label {
+            position: absolute;
+            pointer-events: none;
+            left: 16px;
+            top: 12px;
+            transition: 0.2s ease all;
+            color: var(--text-light);
+        }
+        
+        input:focus ~ .floating-label,
+        input:not(:placeholder-shown) ~ .floating-label {
+            top: -10px;
+            font-size: 12px;
+            color: var(--primary);
+            background: white;
+            padding: 0 5px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+        
+        .progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Submit Your Event</h1>
+            <p class="subtitle">Share your ideas and organize amazing events for our college community!</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="notification">
+            <i class="fas fa-info-circle"></i>
+            <div>
+                <strong>Note:</strong> All submitted events will be reviewed by our team before being published on the website. You'll receive a confirmation email once approved.
+            </div>
+        </div>
+        
+        <div class="form-container">
+            <form id="eventSubmissionForm">
+                <div class="progress-bar">
+                    <div class="progress" id="formProgress"></div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title"><i class="fas fa-calendar-alt"></i> Event Details</h3>
+                    
+                    <div class="form-group">
+                        <label class="required" for="eventName">Event Name</label>
+                        <input type="text" id="eventName" name="eventName" required>
+                        <div class="error"><i class="fas fa-exclamation-circle"></i> Please enter an event name</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col form-group">
+                            <label class="required" for="eventDate">Event Date</label>
+                            <input type="date" id="eventDate" name="eventDate" required>
+                            <div class="error"><i class="fas fa-exclamation-circle"></i> Please select a valid date</div>
+                        </div>
+                        
+                        <div class="col form-group">
+                            <label class="required" for="eventTime">Event Time</label>
+                            <input type="time" id="eventTime" name="eventTime" required>
+                            <div class="error"><i class="fas fa-exclamation-circle"></i> Please select a valid time</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required" for="eventLocation">Event Location</label>
+                        <input type="text" id="eventLocation" name="eventLocation" placeholder="Building, Room Number, or Virtual Link" required>
+                        <div class="error"><i class="fas fa-exclamation-circle"></i> Please enter an event location</div>
+                        <p class="hint"><i class="fas fa-lightbulb"></i> For virtual events, include the meeting platform and link if available</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col form-group">
+                            <label class="required" for="eventCategory">Event Category</label>
+                            <select id="eventCategory" name="eventCategory" required>
+                                <option value="">-- Select a category --</option>
+                                <option value="academic">Academic</option>
+                                <option value="cultural">Cultural</option>
+                                <option value="sports">Sports & Athletics</option>
+                                <option value="workshop">Workshop</option>
+                                <option value="seminar">Seminar</option>
+                                <option value="hackathon">Hackathon</option>
+                                <option value="socialEvent">Social Event</option>
+                                <option value="charity">Community Service</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="error"><i class="fas fa-exclamation-circle"></i> Please select a category</div>
+                        </div>
+                        
+                        <div class="col form-group">
+                            <label for="eventDepartment">Department/Club</label>
+                            <input type="text" id="eventDepartment" name="eventDepartment" placeholder="Optional - Department or Club organizing">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title"><i class="fas fa-align-left"></i> Event Information</h3>
+                    
+                    <div class="form-group">
+                        <label class="required" for="eventDescription">Event Description</label>
+                        <textarea id="eventDescription" name="eventDescription" placeholder="Describe your event, its purpose, and what attendees can expect..." required></textarea>
+                        <div class="error"><i class="fas fa-exclamation-circle"></i> Please provide an event description</div>
+                        <p class="hint"><i class="fas fa-lightbulb"></i> Be concise but informative. Include key details that would make someone want to attend.</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="maxAttendees">Maximum Attendees</label>
+                            <input type="number" id="maxAttendees" name="maxAttendees" min="1" placeholder="Leave blank if no limit">
+                            <p class="hint"><i class="fas fa-users"></i> Set a limit if you have space constraints</p>
+                        </div>
+                        
+                        <div class="col form-group">
+                            <label for="registrationDeadline">Registration Deadline</label>
+                            <input type="datetime-local" id="registrationDeadline" name="registrationDeadline">
+                            <p class="hint"><i class="fas fa-clock"></i> Optional - When should registration close?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title"><i class="fas fa-user"></i> Organizer Information</h3>
+                    
+                    <div class="form-group">
+                        <label class="required" for="organizerName">Organizer Name</label>
+                        <input type="text" id="organizerName" name="organizerName" required>
+                        <div class="error"><i class="fas fa-exclamation-circle"></i> Please enter the organizer's name</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col form-group">
+                            <label class="required" for="organizerEmail">Organizer Email</label>
+                            <input type="email" id="organizerEmail" name="organizerEmail" required>
+                            <div class="error"><i class="fas fa-exclamation-circle"></i> Please enter a valid email address</div>
+                            <p class="hint"><i class="fas fa-envelope"></i> We'll send confirmation and updates to this address</p>
+                        </div>
+                        
+                        <div class="col form-group">
+                            <label for="organizerPhone">Organizer Phone</label>
+                            <input type="tel" id="organizerPhone" name="organizerPhone" placeholder="Optional">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+                    <h3 class="section-title"><i class="fas fa-comment-alt"></i> Additional Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="additionalNotes">Additional Notes or Requirements</label>
+                        <textarea id="additionalNotes" name="additionalNotes" placeholder="Any other details, special equipment needed, accessibility requirements, etc."></textarea>
+                        <p class="hint"><i class="fas fa-lightbulb"></i> Help us understand any special requirements for your event</p>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="window.history.back()"><i class="fas fa-times"></i> Cancel</button>
+                    <button type="submit"><i class="fas fa-paper-plane"></i> Submit Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3 class="modal-title">Event Submitted Successfully!</h3>
+            <p class="modal-text">Thank you for your submission. Our team will review your event and get back to you shortly.</p>
+            <button class="modal-btn" id="closeModal">Continue</button>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 College Events Portal. All rights reserved.</p>
+            <p><i class="fas fa-envelope"></i> events@college.edu | <i class="fas fa-phone"></i> (123) 456-7890</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Track form completion progress
+        const formInputs = document.querySelectorAll('input, select, textarea');
+        const progressBar = document.getElementById('formProgress');
+        const requiredInputs = document.querySelectorAll('[required]');
+        
+        function updateProgress() {
+            let completed = 0;
+            requiredInputs.forEach(input => {
+                if (input.value.trim() !== '') {
+                    completed++;
+                }
+            });
+            
+            const progressPercentage = (completed / requiredInputs.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        }
+        
+        formInputs.forEach(input => {
+            input.addEventListener('input', updateProgress);
+        });
+        
+        // Form submission and validation
+        document.getElementById('eventSubmissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form validation
+            const form = this;
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    const error = field.nextElementSibling;
+                    if (error && error.classList.contains('error')) {
+                        error.style.display = 'flex';
+                    }
+                    field.style.borderColor = '#f72585';
+                } else {
+                    const error = field.nextElementSibling;
+                    if (error && error.classList.contains('error')) {
+                        error.style.display = 'none';
+                    }
+                    field.style.borderColor = '#e0e0e0';
+                }
+            });
+            
+            if (isValid) {
+                // Show success modal
+                document.getElementById('successModal').classList.add('active');
+                
+                // In a real application, you'd use AJAX to submit the form
+                // For example:
+                /*
+                fetch('submit-event-endpoint', {
+                    method: 'POST',
+                    body: new FormData(form)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('successModal').classList.add('active');
+                    } else {
+                        alert('There was an error submitting your event. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error submitting your event. Please try again.');
+                });
+                */
+            } else {
+                // Scroll to the first error
+                const firstError = form.querySelector('[required]:invalid');
+                if (firstError) {
+                    firstError.focus();
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+        
+        // Close modal and reset form
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('successModal').classList.remove('active');
+            document.getElementById('eventSubmissionForm').reset();
+            progressBar.style.width = '0%';
+        });
+        
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('eventDate').setAttribute('min', today);
+        
+        // Add some subtle animations for inputs
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('active');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

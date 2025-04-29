@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon 2025 - Event Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a00e0;
+            --primary-light: #8e2de2;
+            --primary-dark: #3600a7;
+            --accent: #ff6b6b;
+            --secondary: #00d2d3;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --light: #f9f9f9;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --card-bg: white;
+            --input-bg: #f1f2f6;
+            --header-height: 400px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .hero-header {
+            position: relative;
+            height: var(--header-height);
+            background: linear-gradient(to right, rgba(74, 0, 224, 0.9), rgba(142, 45, 226, 0.9)), url('/api/placeholder/1500/600') center/cover no-repeat;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            text-align: center;
+            padding-bottom: 60px;
+            overflow: hidden;
+        }
+        
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: 0;
+        }
+        
+        .event-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background-color: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+        }
+        
+        .event-badge i {
+            margin-right: 8px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .page-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .event-meta-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            gap: 30px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        
+        .meta-item i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+        
+        .event-nav {
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li a {
+            display: block;
+            padding: 20px 25px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-links li a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links li a:hover::after,
+        .nav-links li a.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .nav-links li a.active {
+            color: var(--primary);
+        }
+        
+        .call-to-action {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 0, 224, 0.3);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .call-to-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 0, 224, 0.4);
+        }
+        
+        .call-to-action i {
+            margin-left: 8px;
+        }
+        
+        .main-content {
+            padding: 60px 0;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 12px;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(74, 0, 224, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .info-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .info-card-header {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            padding: 20px;
+        }
+        
+        .info-card-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-card-title i {
+            margin-right: 10px;
+        }
+        
+        .info-card-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .info-card-body {
+            padding: 20px;
+        }
+        
+        .info-list {
+            list-style: none;
+        }
+        
+        .info-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .info-list li i {
+            width: 25px;
+            color: var(--primary);
+            margin-right: 15px;
+        }
+        
+        .price-tag {
+            background-color: rgba(0, 210, 211, 0.1);
+            color: var(--secondary);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .price-tag.highlight {
+            background: linear-gradient(to right, var(--secondary), #5ee7d8);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 210, 211, 0.3);
+        }
+        
+        .sponsor-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .sponsor-logo {
+            width: 120px;
+            height: 60px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+        
+        .sponsor-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            height: calc(100% - 10px);
+            width: 2px;
+            background-color: var(--primary-light);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 25px;
+        }
+        
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid var(--primary);
+        }
+        
+        .timeline-time {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .speaker {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .speaker-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 3px solid white;
+        }
+        
+        .speaker-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .speaker-info h3 {
+            margin-bottom: 5px;
+            color: var(--primary-dark);
+        }
+        
+        .speaker-role {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .speaker-social {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .speaker-social a {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(74, 0, 224, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .speaker-social a:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .badge.primary {
+            background-color: rgba(74, 0, 224, 0.1);
+            color: var(--primary);
+        }
+        
+        .badge.secondary {
+            background-color: rgba(0, 210, 211, 0.1);
+            color: var(--secondary);
+        }
+        
+        .badge.accent {
+            background-color: rgba(255, 107, 107, 0.1);
+            color: var(--accent);
+        }
+        
+        .venue-map {
+            height: 250px;
+            background-color: #f1f2f6;
+            border-radius: 12px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        
+        .venue-map img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding-bottom: 15px;
+        }
+        
+        .faq-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+        }
+        
+        .faq-answer {
+            color: var(--text-light);
+        }
+        
+        .testimonial {
+            background-color: rgba(74, 0, 224, 0.02);
+            border-left: 3px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial:last-child {
+            margin-bottom: 0;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .testimonial-role {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        .note {
+            background-color: rgba(74, 0, 224, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .note.warning {
+            background-color: rgba(253, 203, 110, 0.1);
+            border-left-color: var(--warning);
+        }
+        
+        .note i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        .note.warning i {
+            color: var(--warning);
+        }
+        
+        footer {
+            background-color: #2d3436;
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h4 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .feedback-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(74, 0, 224, 0.3);
+            z-index: 100;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .feedback-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(74, 0, 224, 0.4);
+        }
+        
+        .feedback-badge i {
+            margin-right: 8px;
+        }
+        
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-meta-bar {
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .hero-header {
+                height: auto;
+                padding: 100px 0 80px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .event-badge {
+                top: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-header">
+        <div class="event-badge">
+            <i class="fas fa-trophy"></i> Premier Event
+        </div>
+        <div class="container">
+            <h1 class="page-title">Hackathon 2025</h1>
+            <p class="page-subtitle">48 hours of innovation, collaboration, and groundbreaking solutions to real-world challenges</p>
+        </div>
+        <div class="event-meta-bar">
+            <div class="meta-item">
+                <i class="far fa-calendar-alt"></i>
+                <span>May 22-24, 2025</span>
+            </div>
+            <div class="meta-item">
+                <i class="far fa-clock"></i>
+                <span>Starts at 12:00 PM</span>
+            </div>
+            <div class="meta-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Innovation Hub, Tech Centre</span>
+            </div>
+            <div class="meta-item">
+                <i class="fas fa-users"></i>
+                <span>280/300 Participants</span>
+            </div>
+        </div>
+    </header>
+    
+    <nav class="event-nav">
+        <div class="container nav-container">
+            <ul class="nav-links">
+                <li><a href="#overview" class="active">Overview</a></li>
+                <li><a href="#schedule">Schedule</a></li>
+                <li><a href="#challenges">Challenges</a></li>
+                <li><a href="#prizes">Prizes</a></li>
+                <li><a href="#judges">Judges</a></li>
+                <li><a href="#venue">Venue</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <a href="registration.html" class="call-to-action">Join Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="container">
+            <div class="content-grid">
+                <div class="main-column">
+                    <section id="overview" class="section fade-in">
+                        <h2 class="section-title">
+                            <i class="fas fa-info-circle"></i>
+                            Event Overview
+                        </h2>
+                        <p>Get ready for the most exciting tech event of the year! Hackathon 2025 brings together 300 of the brightest minds in technology for an intense 48-hour coding marathon. Whether you're a seasoned developer, a creative designer, or an innovative thinker, this is your chance to collaborate, create, and compete in developing groundbreaking solutions to real-world challenges.</p>
+                        
+                        <p>Join us for a weekend of innovation, learning, and networking with industry leaders. Form teams or come solo and find teammates on-site. Our experienced mentors will be available throughout the event to provide guidance and support.</p>
+                        
+                        <div class="feature-list">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> 48 hours of non-stop innovation and coding</li>
+                                <li><i class="fas fa-check-circle"></i> State-of-the-art facilities and resources</li>
+                                <li><i class="fas fa-check-circle"></i> Mentorship from industry experts</li>
+                                <li><i class="fas fa-check-circle"></i> Networking opportunities with tech professionals</li>
+                                <li><i class="fas fa-check-circle"></i> Exciting prizes worth over Rs50,000</li>
+                                <li><i class="fas fa-check-circle"></i> Free meals, snacks, and refreshments throughout the event</li>
+                                <li><i class="fas fa-check-circle"></i> Potential recruitment opportunities from sponsor companies</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="note">
+                            <i class="fas fa-info-circle"></i> Participants must bring their own laptops and any specialized hardware required for their projects. High-speed internet, power supplies, and collaborative spaces will be provided.
+                        </div>
+                        
+                        <div class="note warning">
+                            <i class="fas fa-exclamation-triangle"></i> Only 20 spots remaining! Register now to secure your place in this exclusive event.
+                        </div>
+                    </section>
+                    
+                    <section id="schedule" class="section fade-in">
+                        <h2 class="section-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            Event Schedule
+                        </h2>
+                        
+                        <h3>Day 1: Thursday, May 22, 2025</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-time">10:00 AM - 12:00 PM</div>
+                                <div class="timeline-title">Registration & Team Formation</div>
+                                <div class="timeline-content">Check-in, collect your event swag, and connect with potential teammates</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-time">12:00 PM - 1:00 PM</div>
+                                <div class="timeline-title">Opening Ceremony</div>
+                                <div class="timeline-content">Welcome address, introduction to challenges, rules explanation, and keynote speech</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">1:00 PM - 2:00 PM</div>
+                                <div class="timeline-title">Lunch & Networking</div>
+                                <div class="timeline-content">Enjoy catered lunch while mingling with other participants and sponsors</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">2:00 PM</div>
+                                <div class="timeline-title">Hacking Begins!</div>
+                                <div class="timeline-content">Teams start working on their projects - the 48-hour countdown begins</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">6:00 PM - 7:30 PM</div>
+                                <div class="timeline-title">Dinner Break</div>
+                                <div class="timeline-content">Refuel with a delicious dinner</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">9:00 PM - 10:00 PM</div>
+                                <div class="timeline-title">Tech Talk: "Future of AI"</div>
+                                <div class="timeline-content">Optional session for interested participants</div>
+                            </div>
+                        </div>
+                        
+                        <h3>Day 2: Friday, May 23, 2025</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-time">8:00 AM - 9:30 AM</div>
+                                <div class="timeline-title">Breakfast</div>
+                                <div class="timeline-content">Morning fuel to keep you coding</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">10:00 AM - 11:00 AM</div>
+                                <div class="timeline-title">Mentor Check-ins</div>
+                                <div class="timeline-content">Progress review and feedback from industry mentors</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">12:30 PM - 2:00 PM</div>
+                                <div class="timeline-title">Lunch & Midway Presentations</div>
+                                <div class="timeline-content">Brief updates from each team on their progress</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">4:00 PM - 5:00 PM</div>
+                                <div class="timeline-title">Workshop: "Pitching Your Innovation"</div>
+                                <div class="timeline-content">Tips and techniques for effective presentations</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">6:30 PM - 8:00 PM</div>
+                                <div class="timeline-title">Dinner & Networking</div>
+                                <div class="timeline-content">Connect with industry professionals while enjoying dinner</div>
+                            </div>
+                        </div>
+                        
+                        <h3>Day 3: Saturday, May 24, 2025</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-time">8:00 AM - 9:30 AM</div>
+                                <div class="timeline-title">Breakfast</div>
+                                <div class="timeline-content">Final day fuel up</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">12:00 PM</div>
+                                <div class="timeline-title">Code Freeze</div>
+                                <div class="timeline-content">All coding stops - time to finalize presentations</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">12:00 PM - 1:30 PM</div>
+                                <div class="timeline-title">Lunch & Presentation Prep</div>
+                                <div class="timeline-content">Last-minute adjustments to your demos and pitches</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">2:00 PM - 5:00 PM</div>
+                                <div class="timeline-title">Project Presentations</div>
+                                <div class="timeline-content">Each team presents their solution to judges and audience</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">5:00 PM - 6:00 PM</div>
+                                <div class="timeline-title">Judging Deliberation</div>
+                                <div class="timeline-content">Networking reception while judges make their decisions</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">6:00 PM - 7:30 PM</div>
+                                <div class="timeline-title">Awards Ceremony</div>
+                                <div class="timeline-content">Winners announcement, prize distribution, and closing remarks</div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-time">7:30 PM - 9:00 PM</div>
+                                <div class="timeline-title">Celebration Party</div>
+                                <div class="timeline-content">Food, drinks, and celebration of everyone's hard work</div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section id="challenges" class="section fade-in">
+                        <h2 class="section-title">
+                            <i class="fas fa-lightbulb"></i>
+                            Hackathon Challenges
+                        </h2>
+                        
+                        <p>This year's hackathon features five challenge tracks designed to address critical global issues and emerging technologies. Teams can choose one challenge to focus their innovation efforts:</p>
+                        
+                        <div class="section" style="box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin: 20px 0;">
+                            <h3 style="color: var(--primary);">Sustainable Solutions</h3>
+                            <p>Create applications or systems that address environmental challenges, promote sustainability, or enable better resource management.</p>
+                            <div style="margin-top: 10px;">
+                                <span class="badge primary">CleanTech</span>
+                                <span class="badge secondary">IoT</span>
+                                <span class="badge accent">Sustainability</span>
+                            </div>
+                        </div>
+                        
+                        <div class="section" style="box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin: 20px 0;">
+                            <h3 style="color: var(--primary);">Health & Wellness Innovation</h3>
+                            <p>Develop solutions that improve healthcare access, patient outcomes, mental health support, or wellness monitoring and management.</p>
+                            <div style="margin-top: 10px;">
+                                <span class="badge primary">MedTech</span>
+                                <span class="badge secondary">AI</span>
+                                <span class="badge accent">Accessibility</span>
+                            </div>
+                        </div>
+                        
+                        <div class="section" style="box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin: 20px 0;">
+                            <h3 style="color: var(--primary);">Future of Education</h3>
+                            <p>Build tools, platforms, or applications that enhance learning experiences, improve educational outcomes, or make education more accessible.</p>
+                            <div style="margin-top: 10px;">
+                                <span class="badge primary">EdTech</span>
+                                <span class="badge secondary">AR/VR</span>
+                                <span class="badge accent">Inclusivity</span>
+                            </div>
+                        </div>
+                        
+                        <div class="section" style="box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin: 20px 0;">
+                            <h3 style="color: var(--primary);">Smart Cities</h3>
+                            <p>Create solutions that improve urban living, enhance city infrastructure, or address urban challenges like transportation, safety, or community engagement.</p>
+                            <div style="margin-top: 10px;">
+                                <span class="badge primary">UrbanTech</span>
+                                <span class="badge secondary">Data Analytics</span>
+                                <span class="badge accent">Connectivity</span>
+                            </div>
+                        </div>
+                        
+                        <div class="section" style="box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin: 20px 0;">
+                            <h3 style="color: var(--primary);">Open Innovation</h3>
+                            <p>Have a groundbreaking idea that doesn't fit into the other categories? Choose this track to build any innovative solution that demonstrates technical excellence and creativity.</p>
+                            <div style="margin-top: 10px;">
+                                <span class="badge primary">Innovation</span>
+                                <span class="badge secondary">Creativity</span>
+                                <span class="badge accent">Technology</span>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section id="prizes" class="section fade-in">
+                        <h2 class="section-title">
+                            <i class="fas fa-award"></i>
+                            Prizes & Rewards
+                        </h2>
+                        
+                        <p>Hackathon 2025 features a total prize pool of Rs50,000 with additional special awards and opportunities:</p>
+                        
+                        <div class="section" style="box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin: 20px 0;">
+                            <h3 style="color: var(--accent);">Grand Prize</h3>
+                            <div class="price-tag highlight">Rs20,000</div>
+                            <p>Awarded to the overall winning team across all categories</p>
+                            <p>Plus: Incubation opportunity with TechVentures and mentorship package</p>
+                        </div>
+                        
+                        <div class="section" style="box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin: 20px 0;">
+                            <h3 style="color: var(--secondary);">Category Winners</h3>
+                            <div class="price-tag">Rs5,000 Each</div>
+                            <p>Best solution in each of the five challenge tracks</p>
+                        </div>
+                        
+                        <div class="section" style="box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin: 20px 0;">
+                            <h3 style="color: var(--primary);">Special Awards</h3>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-trophy"></i> <strong>Most Innovative Solution</strong>: Rs3,000</li>
+                                <li><i class="fas fa-trophy"></i> <strong>Best Technical Implementation</strong>: Rs3,000</li>
+                                <li><i class="fas fa-trophy"></i> <strong>Best UI/UX Design</strong>: Rs2,000</li>
+                                <li><i class="fas fa-trophy"></i> <strong>People's Choice Award</strong>: Rs2,000</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="note">
+                            <i class="fas fa-info-circle"></i> All participants will receive certificates, event swag, and access to exclusive workshops and networking events throughout the year.
+                        </div>
+                    </section>
+                    
+                    <section id="judges" class="section fade-in">
+                        <h2 class="section-title">
+                            <i class="fas fa-gavel"></i>
+                            Meet Our Judges
+                        </h2>
+                        
+                        <p>Our distinguished panel of judges brings together expertise from various tech domains and industries:</p>
+                        
+                        <div class="speaker">
+                            <div class="speaker-avatar">
+                                <img src="/api/placeholder/80/80" alt="Sarah Chen">
+                            </div>
+                            <div class="speaker-info">
+                                <h3>Sarah Chen</h3>
+                                <div class="speaker-role">CTO at InnovateTech</div>
+                                <p>Expert in AI and machine learning with over 15 years of experience leading technology innovation.</p>
+                                <div class="speaker-social">
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="speaker">
+                            <div class="speaker-avatar">
+                                <img src="/api/placeholder/80/80" alt="Marcus Johnson">
+                            </div>
+                            <div class="speaker-info">
+                                <h3>Marcus Johnson</h3>
+                                <div class="speaker-role">Venture Partner at TechFund Ventures</div>
+                                <p>Early-stage investor with a portfolio of successful tech startups and expertise in scaling innovations.</p>
+                                <div class="speaker-social">
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="speaker">
+                            <div class="speaker-avatar">
+                                <img src="/api/placeholder/80/80" alt="Dr. Priya Sharma">
+                            </div>
+                            <div class="speaker-info">
+                                <h3>Dr. Priya Sharma</h3>
+                                <div class="speaker-role">Head of Research at HealthTech Institute</div>
+                                <p>Leading researcher in digital health technologies and healthcare innovation.</p>
+                                <div class="speaker-social">
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="speaker">
+                            <div class="speaker-avatar">
+                                <img src="/api/placeholder/80/80" alt="David Rodriguez">
+                            </div>
+                            <div class="speaker-info">
+                                <h3>David Rodriguez</h3>
+                                <div class="speaker-role">Director of Engineering at CloudSolutions</div>
+                                <p>Cloud architecture expert specializing in scalable and sustainable tech solutions.</p>
+                                <div class="speaker-social">
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="speaker">
+                            <div class="speaker-avatar">
+                                <img src="/api/placeholder/80/80" alt="Lisa Kwan">
+                            </div>
+                            <div class="speaker-info">
+                                <h3>Lisa Kwan</h3>
+                                <div class="speaker-role">UX Director at DesignForward</div>
+                                <p>Award-winning designer focusing on human-centered solutions and accessible user experiences.</p>
+                                <div class="speaker-social">
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section id="venue" class="section fade-in">
+                        <h2 class="section-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Venue Information
+                        </h2>
+                        
+                        <p>Hackathon 2025 will take place at the state-of-the-art Innovation Hub at Tech Centre, featuring:</p>
+                        
+                        <div class="feature-list">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> 25,000 sq. ft. of collaborative space</li>
+                                <li><i class="fas fa-check-circle"></i> High-speed fiber internet throughout the venue</li>
+                                <li><i class="fas fa-check-circle"></i> 24-hour access during the event</li>
+                                <li><i class="fas fa-check-circle"></i> Dedicated quiet areas for focused work</li>
+                                <li><i class="fas fa-check-circle"></i> Relaxation zones with gaming and entertainment</li>
+                                <li><i class="fas fa-check-circle"></i> On-site catering and refreshment stations</li>
+                                <li><i class="fas fa-check-circle"></i> Secure storage for personal belongings</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="venue-map">
+                            <img src="/api/placeholder/800/400" alt="Innovation Hub Map">
+                        </div>
+                        
+                        <h3 style="margin-top: 20px;">Address:</h3>
+                        <p>Innovation Hub, Tech Centre<br>
+                        123 Digital Boulevard<br>
+                        Technology Park, TC 10101</p>
+                        
+                        <h3 style="margin-top: 20px;">Transportation:</h3>
+                        <p>Free shuttle service available from downtown and major hotels<br>
+                        Parking available on-site for registered participants<br>
+                        Public transit: Lines 42, 55, and 301 stop directly at Tech Centre</p>
+                    </section>
+                    
+                    <section id="faq" class="section fade-in">
+                        <h2 class="section-title">
+                            <i class="fas fa-question-circle"></i>
+                            Frequently Asked Questions
+                        </h2>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Do I need to come with a team?</div>
+                            <div class="faq-answer">No, you can register individually and form a team at the event. We'll have team formation activities to help you connect with potential teammates. You can also come with a pre-formed team of up to 5 people.</div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">What skills do I need to participate?</div>
+                            <div class="faq-answer">We welcome participants with various skills - developers, designers, business analysts, project managers, subject matter experts, and creative thinkers. Diverse teams often create the most innovative solutions!</div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">What should I bring to the hackathon?</div>
+                            <div class="faq-answer">Bring your laptop, charger, any specialized hardware or tools you might need, and your creativity! We'll provide food, drinks, internet, and a comfortable working environment.</div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Is there an age requirement?</div>
+                            <div class="faq-answer">Participants must be 18 years or older to attend. We also have a separate Junior Hackathon for participants aged 13-17 running concurrently in a separate area.</div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Can I start working on my project before the hackathon?</div>
+                            <div class="faq-answer">All code and design work must be created during the hackathon. You can come with ideas and plans, but implementation should happen during the event. Pre-existing libraries and frameworks are allowed.</div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Will there be sleeping accommodations?</div>
+                            <div class="faq-answer">We'll have designated quiet relaxation areas with comfortable seating for those who want to rest. Many participants choose to work through the night, but we encourage everyone to get some rest!</div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">How will projects be judged?</div>
+                            <div class="faq-answer">Projects will be evaluated based on innovation, technical implementation, design, business potential, and presentation quality. Each challenge track may have additional specific criteria.</div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Is there a registration fee?</div>
+                            <div class="faq-answer">The registration fee is Rs50, which covers all meals, refreshments, event swag, and access to the venue. Student discounts are available with valid ID. Some scholarships are available for those who need financial assistance.</div>
+                        </div>
+                    </section>
+                </div>
+                
+                <div class="sidebar">
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-card-title">
+                                <i class="fas fa-ticket-alt"></i> Registration
+                            </div>
+                            <div class="info-card-subtitle">Secure your spot now</div>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="price-tag">Rs50 Registration Fee</div>
+                            <ul class="info-list">
+                                <li><i class="fas fa-calendar"></i> <strong>Deadline:</strong> May 10, 2025</li>
+                                <li><i class="fas fa-user-friends"></i> <strong>Team Size:</strong> 1-5 participants</li>
+                                <li><i class="fas fa-graduation-cap"></i> <strong>Student Discount:</strong> 50% off</li>
+                            </ul>
+                            <a href="registration.html" class="call-to-action" style="width: 100%; margin-top: 15px; justify-content: center;">Register Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-card-title">
+                                <i class="fas fa-building"></i> Our Sponsors
+                            </div>
+                            <div class="info-card-subtitle">Supported by industry leaders</div>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="sponsor-logos">
+                                <div class="sponsor-logo">
+                                    <img src="/api/placeholder/100/50" alt="TechCorp">
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="/api/placeholder/100/50" alt="InnovateNow">
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="/api/placeholder/100/50" alt="FutureCloud">
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="/api/placeholder/100/50" alt="DevOps Solutions">
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="/api/placeholder/100/50" alt="DataSmart">
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="/api/placeholder/100/50" alt="AI Partners">
+                                </div>
+                            </div>
+                            <div style="text-align: center; margin-top: 15px;">
+                                <a href="sponsors.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">View All Sponsors</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-card-title">
+                                <i class="fas fa-lightbulb"></i> Resources
+                            </div>
+                            <div class="info-card-subtitle">Prepare for the hackathon</div>
+                        </div>
+                        <div class="info-card-body">
+                            <ul class="info-list">
+                                <li><i class="fas fa-book"></i> <a href="#" style="color: var(--text); text-decoration: none;">Participant Handbook</a></li>
+                                <li><i class="fas fa-tools"></i> <a href="#" style="color: var(--text); text-decoration: none;">API Documentation</a></li>
+                                <li><i class="fas fa-laptop-code"></i> <a href="#" style="color: var(--text); text-decoration: none;">Setup Instructions</a></li>
+                                <li><i class="fas fa-chalkboard-teacher"></i> <a href="#" style="color: var(--text); text-decoration: none;">Workshop Materials</a></li>
+                                <li><i class="fas fa-clipboard-list"></i> <a href="#" style="color: var(--text); text-decoration: none;">Judging Criteria</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-card-title">
+                                <i class="fas fa-comments"></i> Testimonials
+                            </div>
+                            <div class="info-card-subtitle">From previous hackathons</div>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="testimonial">
+                                <div class="testimonial-text">
+                                    "This hackathon changed my career trajectory. Our team's project got funded and we're now running a successful startup!"
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-avatar">
+                                        <img src="/api/placeholder/40/40" alt="Michael T.">
+                                    </div>
+                                    <div>
+                                        <div class="testimonial-name">Michael T.</div>
+                                        <div class="testimonial-role">Hackathon 2023 Winner</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="testimonial">
+                                <div class="testimonial-text">
+                                    "The networking opportunities were incredible. I met my co-founder and our lead developer at last year's event!"
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-avatar">
+                                        <img src="/api/placeholder/40/40" alt="Aisha R.">
+                                    </div>
+                                    <div>
+                                        <div class="testimonial-name">Aisha R.</div>
+                                        <div class="testimonial-role">CEO, TechSolve</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Hackathon 2025</h4>
+                    <p>The premier innovation event bringing together the brightest minds to create solutions for tomorrow's challenges.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#overview">Event Overview</a></li>
+                        <li><a href="#schedule">Schedule</a></li>
+                        <li><a href="#challenges">Challenges</a></li>
+                        <li><a href="#prizes">Prizes</a></li>
+                        <li><a href="#judges">Judges</a></li>
+                        <li><a href="#venue">Venue</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Participant Handbook</a></li>
+                        <li><a href="#">Code of Conduct</a></li>
+                        <li><a href="#">Previous Winners</a></li>
+                        <li><a href="#">Sponsorship Opportunities</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope" style="margin-right: 10px;"></i> info@hackathon2025.com</li>
+                        <li><i class="fas fa-phone" style="margin-right: 10px;"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Innovation Hub, Tech Centre<br>123 Digital Boulevard</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Hackathon 2025. All rights reserved. | <a href="#" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="feedback-badge">
+        <i class="fas fa-question-circle"></i> Need Help?
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
