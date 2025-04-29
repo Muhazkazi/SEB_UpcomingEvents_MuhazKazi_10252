@@ -33,6 +33,7 @@ Currently, we are working on the **frontend** using HTML, CSS, and JavaScript. B
 
 To run this project locally:
 
-1. Download or clone the repository:
-   ```bash
-   git clone https://github.com/your-username/SEB_UpcomingEvents_MuhazKazi_10252.git
+1. Download the zip folder
+2. after downloading extract the folder
+3. open index.html
+4. right click and open with live server.
