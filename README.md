@@ -40,4 +40,4 @@ To run this project locally:
 
 ## Video link and presentation 
 - https://drive.google.com/drive/folders/1u-L0KPcQ3bcgvbw9Hyt_-jwDzXa3XL1J?usp=sharing
-- ./FSD_PROJECT.pdf
+- [DOWNLOAD PDF] (./FSD_PROJECT.pdf)
