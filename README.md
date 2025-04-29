@@ -37,3 +37,7 @@ To run this project locally:
 2. after downloading extract the folder
 3. open index.html
 4. right click and open with live server.
+
+## Video link and presentation 
+- https://drive.google.com/drive/folders/1u-L0KPcQ3bcgvbw9Hyt_-jwDzXa3XL1J?usp=sharing
+- ./FSD_PROJECT.pdf
